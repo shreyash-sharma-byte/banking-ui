@@ -1,5 +1,7 @@
 # Ledger — Angular client for the Banking Microservices platform
 
+**Live demo:** https://lighting-fellowship-gordon-post.trycloudflare.com — sign in with any demo account shown on the sign-in page.
+
 The web client for an eight-service Spring Boot banking platform: accounts,
 transfers, an event-driven payment pipeline and an immutable unified ledger.
 
