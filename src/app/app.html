@@ -1,0 +1,49 @@
+<div class="app">
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" [routerLink]="auth.isAuthenticated() ? '/dashboard' : '/'">
+        <span class="brand-mark">Ledger</span>
+        <span class="brand-sub">banking</span>
+      </a>
+
+      <nav class="nav" *ngIf="auth.isAuthenticated()" aria-label="Primary">
+        <a routerLink="/dashboard" routerLinkActive="active">Dashboard</a>
+        <a routerLink="/transfer" routerLinkActive="active">Transfer</a>
+        <a routerLink="/history" routerLinkActive="active">History</a>
+        <a routerLink="/accounts/new" routerLinkActive="active">New account</a>
+      </nav>
+
+      <div class="topbar-right" *ngIf="auth.isAuthenticated()">
+        <span class="badge badge-role">{{ auth.getRole() }}</span>
+        <button class="btn btn-ghost btn-sm" (click)="auth.logout()">Sign out</button>
+      </div>
+
+      <div class="topbar-right" *ngIf="!auth.isAuthenticated()">
+        <a class="btn btn-primary btn-sm" routerLink="/login">Sign in</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="main">
+    <router-outlet></router-outlet>
+  </main>
+
+  <footer class="footer">
+    <span>
+      Made by
+      <a
+        href="https://github.com/shreyashsharmaprojects-del"
+        target="_blank"
+        rel="noopener"
+        title="GitHub — shreyashsharmaprojects-del"
+        >Shreyash Sharma</a
+      >
+      ·
+      <a href="https://www.linkedin.com/in/shreyash-sharma-908b741a9" target="_blank" rel="noopener"
+        >LinkedIn</a
+      >
+      ·
+      <a href="mailto:shreyashms2501@gmail.com">shreyashms2501@gmail.com</a>
+    </span>
+  </footer>
+</div>

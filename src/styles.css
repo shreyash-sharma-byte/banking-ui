@@ -1,0 +1,660 @@
+/* =============================================================================
+ * Ledger — banking demo, global styles.
+ *
+ * Design intent (deliberate, not accidental):
+ *   - A calm, dense, workmanlike "information console". Hierarchy comes from
+ *     type scale, weight and spacing; colour is reserved for meaning
+ *     (credit vs debit, success vs failure, the single accent for links and
+ *     the primary action).
+ *   - Typeface: IBM Plex Sans for UI text, IBM Plex Mono for numbers, amounts,
+ *     account numbers and micro-labels. The monospace numerals are what give
+ *     the surface its "instrument" character. Fonts load from Google Fonts in
+ *     index.html with a system fallback so an offline visitor still gets a
+ *     coherent layout.
+ *   - Plain CSS only. 4px radius, hairline borders, at most a 1px shadow. No
+ *     gradients, no glassmorphism, no decoration.
+ * ========================================================================== */
+
+:root {
+  color-scheme: light;
+
+  /* paper + ink */
+  --bg: #f6f5f1;
+  --surface: #ffffff;
+  --surface-2: #faf9f6;
+  --ink: #1c1b18;
+  --ink-2: #44433e;
+  --muted: #6b6a63;
+  --faint: #9b9a92;
+  --line: #e4e2da;
+  --line-2: #d5d3ca;
+
+  /* the one accent — links, focus, the primary action */
+  --accent: #1f4e8c;
+  --accent-strong: #163c6d;
+  --on-accent: #ffffff;
+
+  /* meaning colours */
+  --credit: #1c7c43;
+  --credit-bg: #eaf4ee;
+  --debit: #b3261e;
+  --debit-bg: #fbeceb;
+  --warn: #8a5a00;
+  --warn-bg: #f7f0e2;
+
+  --radius: 4px;
+  --shadow: 0 1px 2px rgba(20, 20, 15, 0.05);
+
+  --sans: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", Roboto,
+    Helvetica, Arial, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, Consolas,
+    "Liberation Mono", monospace;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 0.9375rem;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+h1,
+h2,
+h3,
+p {
+  margin: 0;
+}
+
+a {
+  color: var(--accent);
+}
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+
+/* ---- micro label / eyebrow ------------------------------------------------- */
+.eyebrow {
+  font-family: var(--mono);
+  font-size: 0.6875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+  margin: 0 0 6px;
+}
+
+/* ---- layout ---------------------------------------------------------------- */
+.page {
+  max-width: 1040px;
+  margin: 0 auto;
+  padding: 24px 16px 56px;
+  width: 100%;
+}
+
+.page-narrow {
+  max-width: 560px;
+}
+
+.page-head {
+  margin-bottom: 20px;
+}
+
+.page-title {
+  font-size: 1.375rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+  margin: 0 0 4px;
+}
+
+.page-sub {
+  font-size: 0.875rem;
+  color: var(--muted);
+}
+
+.section-title {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+  margin: 24px 0 8px;
+}
+
+/* ---- card ------------------------------------------------------------------ */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 16px;
+  box-shadow: var(--shadow);
+}
+
+.card + .card {
+  margin-top: 16px;
+}
+
+/* ---- forms ----------------------------------------------------------------- */
+.form .field + .field {
+  margin-top: 14px;
+}
+
+.field label,
+.field-label {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: var(--ink-2);
+  margin-bottom: 5px;
+}
+
+.control {
+  width: 100%;
+  font-family: var(--sans);
+  font-size: 0.9375rem;
+  color: var(--ink);
+  background: var(--surface);
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius);
+  padding: 8px 10px;
+  min-height: 38px;
+}
+
+.control::placeholder {
+  color: var(--faint);
+}
+
+.control:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px rgba(31, 78, 140, 0.15);
+}
+
+select.control {
+  height: 38px;
+}
+
+.hint {
+  font-size: 0.75rem;
+  color: var(--muted);
+  margin-top: 5px;
+}
+
+.text-credit {
+  color: var(--credit);
+}
+
+.text-debit {
+  color: var(--debit);
+}
+
+.text-warn {
+  color: var(--warn);
+}
+
+.text-muted {
+  color: var(--muted);
+}
+
+/* ---- buttons --------------------------------------------------------------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--sans);
+  font-size: 0.875rem;
+  font-weight: 500;
+  line-height: 1.2;
+  padding: 8px 14px;
+  border-radius: var(--radius);
+  border: 1px solid transparent;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background-color 0.12s ease, border-color 0.12s ease,
+    color 0.12s ease;
+}
+
+.btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.btn-primary {
+  background: var(--accent);
+  color: var(--on-accent);
+}
+
+.btn-primary:hover:not(:disabled) {
+  background: var(--accent-strong);
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--ink-2);
+  border-color: var(--line-2);
+}
+
+.btn-ghost:hover:not(:disabled) {
+  background: var(--surface-2);
+  color: var(--ink);
+}
+
+.btn-sm {
+  padding: 5px 10px;
+  font-size: 0.8125rem;
+}
+
+.btn-block {
+  width: 100%;
+}
+
+/* ---- alerts ---------------------------------------------------------------- */
+.alert {
+  padding: 10px 12px;
+  border-radius: var(--radius);
+  font-size: 0.875rem;
+  border: 1px solid transparent;
+}
+
+.alert-error {
+  background: var(--debit-bg);
+  color: #7c1d17;
+  border-color: #e8c4c1;
+}
+
+.alert-success {
+  background: var(--credit-bg);
+  color: #145c31;
+  border-color: #c2e0cd;
+}
+
+.alert-warn {
+  background: var(--warn-bg);
+  color: #6b4700;
+  border-color: #e6d3ae;
+}
+
+/* ---- badges ----------------------------------------------------------------- */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 3px 8px;
+  border-radius: var(--radius);
+  border: 1px solid var(--line-2);
+  color: var(--muted);
+  background: var(--surface-2);
+  white-space: nowrap;
+}
+
+.badge-role {
+  color: var(--ink-2);
+}
+
+.badge-credit {
+  color: var(--credit);
+  border-color: #bfdfca;
+  background: var(--credit-bg);
+}
+
+.badge-debit {
+  color: var(--debit);
+  border-color: #e7c0bd;
+  background: var(--debit-bg);
+}
+
+/* ---- numbers / amounts ------------------------------------------------------- */
+.amount,
+.num {
+  font-family: var(--mono);
+  font-variant-numeric: tabular-nums;
+}
+
+.amount-credit {
+  color: var(--credit);
+}
+
+.amount-debit {
+  color: var(--debit);
+}
+
+/* ---- empty state ------------------------------------------------------------ */
+.empty {
+  padding: 24px 0;
+  text-align: center;
+  color: var(--muted);
+  font-size: 0.875rem;
+}
+
+/* ---- auth (login / register) ------------------------------------------------ */
+.auth-wrap {
+  display: flex;
+  justify-content: center;
+  padding: 32px 16px 56px;
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 400px;
+}
+
+.auth-title {
+  font-size: 1.375rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  margin: 0 0 4px;
+}
+
+.auth-sub {
+  font-size: 0.875rem;
+  color: var(--muted);
+  margin: 0 0 20px;
+}
+
+.auth-foot {
+  margin-top: 16px;
+  font-size: 0.875rem;
+  color: var(--muted);
+}
+
+.auth-foot a {
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.auth-foot a:hover {
+  text-decoration: underline;
+}
+
+/* ---- dashboard -------------------------------------------------------------- */
+.balance-figure {
+  font-family: var(--mono);
+  font-variant-numeric: tabular-nums;
+  font-size: 1.75rem;
+  font-weight: 500;
+  color: var(--ink);
+  margin-top: 2px;
+}
+
+.acct-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+  margin: 16px 0;
+}
+
+.acct-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.acct-label {
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.acct-type {
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.acct-num {
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  color: var(--faint);
+  letter-spacing: 0.03em;
+  margin-top: 2px;
+}
+
+.acct-balance {
+  font-family: var(--mono);
+  font-variant-numeric: tabular-nums;
+  font-size: 1.375rem;
+  margin: 12px 0 8px;
+}
+
+.acct-link {
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.acct-link:hover {
+  text-decoration: underline;
+}
+
+.tx-list {
+  margin-top: 4px;
+}
+
+.tx-item {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.tx-item:last-child {
+  border-bottom: 0;
+  padding-bottom: 0;
+}
+
+.tx-amount {
+  font-family: var(--mono);
+  font-variant-numeric: tabular-nums;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.tx-ref {
+  color: var(--ink-2);
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.tx-date {
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  color: var(--faint);
+  white-space: nowrap;
+}
+
+/* ---- history: filters + responsive table ------------------------------------ */
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 10px;
+  margin-bottom: 16px;
+}
+
+.filters .field {
+  flex: 1 1 100%;
+  margin: 0;
+  min-width: 0;
+}
+
+.tx-table {
+  border-top: 1px solid var(--line);
+}
+
+.tx-head {
+  display: none;
+}
+
+.tx-row {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2px;
+  padding: 12px 2px;
+  border-bottom: 1px solid var(--line);
+}
+
+.tx-cell {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.tx-cell::before {
+  content: attr(data-label);
+  font-family: var(--mono);
+  font-size: 0.6875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+  flex: 0 0 auto;
+}
+
+.pager {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.pager-info {
+  font-family: var(--mono);
+  font-size: 0.8125rem;
+  color: var(--muted);
+}
+
+/* ---- transfer: recipient search --------------------------------------------- */
+.search-results {
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius);
+  max-height: 180px;
+  overflow-y: auto;
+  margin: 6px 0 2px;
+  background: var(--surface);
+}
+
+.search-item {
+  padding: 8px 12px;
+  cursor: pointer;
+  border-bottom: 1px solid var(--line);
+}
+
+.search-item:last-child {
+  border-bottom: 0;
+}
+
+.search-item:hover {
+  background: var(--surface-2);
+}
+
+.search-item.selected {
+  background: var(--surface-2);
+  box-shadow: inset 2px 0 0 var(--accent);
+}
+
+.search-item-name {
+  font-weight: 500;
+  color: var(--ink);
+  font-size: 0.875rem;
+}
+
+.search-item-sub {
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  color: var(--muted);
+}
+
+/* ---- responsive: widen out from a single column ------------------------------ */
+@media (min-width: 640px) {
+  .page {
+    padding: 32px 24px 64px;
+  }
+
+  .auth-wrap {
+    padding: 48px 24px 64px;
+  }
+
+  .acct-grid {
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  }
+
+  .filters .field {
+    flex: 1 1 150px;
+  }
+
+  /* the collapsed-card table becomes a real grid */
+  .tx-head {
+    display: grid;
+    grid-template-columns: 1.4fr 0.8fr 1fr 1.6fr;
+    gap: 12px;
+    padding: 8px 2px;
+    border-bottom: 1px solid var(--line-2);
+  }
+
+  .tx-head > div {
+    font-family: var(--mono);
+    font-size: 0.6875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--muted);
+  }
+
+  .tx-row {
+    grid-template-columns: 1.4fr 0.8fr 1fr 1.6fr;
+    gap: 12px;
+    align-items: baseline;
+  }
+
+  .tx-cell {
+    display: block;
+  }
+
+  .tx-cell::before {
+    display: none;
+  }
+
+  .tx-cell-amt {
+    text-align: right;
+  }
+
+  .tx-head .tx-cell-amt {
+    text-align: right;
+  }
+}
+
+/* ---- mobile: primary actions meet the 44px tap-target minimum ----------------- */
+@media (max-width: 639px) {
+  .btn-primary {
+    min-height: 44px;
+  }
+}
